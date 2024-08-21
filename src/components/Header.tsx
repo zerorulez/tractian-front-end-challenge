@@ -1,14 +1,12 @@
 import useFetch from "../hooks/useFetch";
 import TractianLogo from "@/assets/tractian.svg";
-import useCompanyStore from "../hooks/useCompanyStore";
+import useStore from "../hooks/useStore";
 import Button from "./ui/Button";
 import GoldIcon from "./icons/Gold";
 
 function Header() {
-  const selectedCompany = useCompanyStore((state) => state.selectedCompany);
-  const setSelectedCompany = useCompanyStore(
-    (state) => state.setSelectedCompany
-  );
+  const selectedCompany = useStore((state) => state.selectedCompany);
+  const setSelectedCompany = useStore((state) => state.setSelectedCompany);
 
   const { data, isLoading, error } = useFetch("/companies");
 

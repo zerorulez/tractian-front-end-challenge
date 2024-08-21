@@ -11,6 +11,8 @@ export default {
       "gray-200": "#D8DFE6",
       "gray-600": "#77818C",
       "gray-950": "#24292F",
+      "green-500": "#52C41A",
+      "red-500": "#ED3833",
     },
   },
   plugins: [],
