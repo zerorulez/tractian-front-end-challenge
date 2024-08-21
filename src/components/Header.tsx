@@ -3,9 +3,14 @@ import TractianLogo from "@/assets/tractian.svg";
 import GoldIcon from "@/assets/icons/gold.svg";
 import { useState } from "react";
 import { clsx } from "clsx";
+import useCompanyStore from "../hooks/useCompanyStore";
+import Button from "./ui/Button";
 
 function Header() {
-  const [selectedCompany, setSelectedCompany] = useState({});
+  const selectedCompany = useCompanyStore((state) => state.selectedCompany);
+  const updateSelectedCompany = useCompanyStore(
+    (state) => state.updateSelectedCompany
+  );
 
   const { data, isLoading, error } = useFetch(
     `${import.meta.env.VITE_API_URL}/companies`
@@ -23,19 +28,15 @@ function Header() {
               .slice(0)
               .reverse()
               .map((company: { id: string; name: string }) => (
-                <button
-                  className={clsx(
-                    selectedCompany.id === company.id
-                      ? "bg-primary"
-                      : "bg-secondary",
-                    "py-1 px-2 rounded-sm flex items-center gap-2 font-semibold text-xs hover:bg-primary"
-                  )}
+                <Button
+                  label={`${company.name} Unit`}
+                  icon={GoldIcon}
+                  handleClick={() => {
+                    updateSelectedCompany(company);
+                  }}
                   key={company.id}
-                  onClick={() => setSelectedCompany(company)}
-                >
-                  <img src={GoldIcon} alt="Gold Icon" />
-                  {`${company.name} Unit`}
-                </button>
+                  selected={selectedCompany.id === company.id}
+                />
               ))}
         </nav>
       </div>
