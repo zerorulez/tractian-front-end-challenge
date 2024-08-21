@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 const useCompanyStore = create((set) => ({
   selectedCompany: {},
-  updateSelectedCompany: (newCompany: object) =>
+  setSelectedCompany: (newCompany: object) =>
     set({ selectedCompany: newCompany }),
 }));
 

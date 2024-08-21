@@ -5,8 +5,10 @@ const useFetch = (url: string) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const API_URL = "http://fake-api.tractian.com";
+
   useEffect(() => {
-    fetch(url)
+    fetch(API_URL + url)
       .then((response) => {
         if (!response.ok) {
           // error coming back from server
@@ -16,7 +18,7 @@ const useFetch = (url: string) => {
       })
       .then((data) => {
         setIsLoading(false);
-        setData(data);
+        setData(data.slice(0).reverse());
         setError(null);
       })
       .catch((err) => {

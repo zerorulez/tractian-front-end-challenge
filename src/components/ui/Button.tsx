@@ -3,25 +3,27 @@ import { clsx } from "clsx";
 function Button({
   className,
   variant,
-  size,
   selected,
   label,
-  icon,
+  Icon,
   handleClick,
 }: {
   className?: string;
-  variant?: string;
-  size?: string;
+  variant: "nav" | "outline";
   selected?: boolean;
   label: string;
-  icon?: string;
+  Icon?: () => JSX.Element;
   handleClick?: () => void;
 }) {
   return (
     <button
       className={clsx(
-        selected ? "bg-primary" : "bg-secondary",
-        "py-1 px-2 rounded-sm flex items-center gap-2 font-semibold text-xs hover:bg-primary",
+        variant === "nav" &&
+          `bg-blue-900 ${
+            selected && "!bg-blue-500"
+          } py-1 px-2 rounded-sm flex items-center gap-2 font-semibold text-xs hover:bg-blue-500`,
+        variant === "outline" &&
+          "font-semibold text-gray-600 text-sm bg-[#ffffff] border border-gray-200 rounded-[3px] flex items-center py-[6px] px-4 gap-[6px] hover:bg-blue-500 hover:text-[#ffffff] group",
         className
       )}
       onClick={() => {
@@ -30,7 +32,15 @@ function Button({
         }
       }}
     >
-      {icon && <img src={icon} alt={`Ícone ${label}`} />}
+      {Icon && (
+        <div
+          className={clsx(
+            variant === "outline" && "text-blue-500 group-hover:text-[#ffffff]"
+          )}
+        >
+          <Icon />
+        </div>
+      )}
       {label}
     </button>
   );

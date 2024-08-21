@@ -1,20 +1,16 @@
 import useFetch from "../hooks/useFetch";
 import TractianLogo from "@/assets/tractian.svg";
-import GoldIcon from "@/assets/icons/gold.svg";
-import { useState } from "react";
-import { clsx } from "clsx";
 import useCompanyStore from "../hooks/useCompanyStore";
 import Button from "./ui/Button";
+import GoldIcon from "./icons/Gold";
 
 function Header() {
   const selectedCompany = useCompanyStore((state) => state.selectedCompany);
-  const updateSelectedCompany = useCompanyStore(
-    (state) => state.updateSelectedCompany
+  const setSelectedCompany = useCompanyStore(
+    (state) => state.setSelectedCompany
   );
 
-  const { data, isLoading, error } = useFetch(
-    `${import.meta.env.VITE_API_URL}/companies`
-  );
+  const { data, isLoading, error } = useFetch("/companies");
 
   return (
     <header>
@@ -24,20 +20,18 @@ function Header() {
         <img src={TractianLogo} alt="Tractian Logo" />
         <nav className="flex gap-2">
           {data &&
-            data
-              .slice(0)
-              .reverse()
-              .map((company: { id: string; name: string }) => (
-                <Button
-                  label={`${company.name} Unit`}
-                  icon={GoldIcon}
-                  handleClick={() => {
-                    updateSelectedCompany(company);
-                  }}
-                  key={company.id}
-                  selected={selectedCompany.id === company.id}
-                />
-              ))}
+            data.map((company: { id: string; name: string }) => (
+              <Button
+                label={`${company.name} Unit`}
+                handleClick={() => {
+                  setSelectedCompany(company);
+                }}
+                key={company.id}
+                selected={selectedCompany.id === company.id}
+                variant="nav"
+                Icon={GoldIcon}
+              />
+            ))}
         </nav>
       </div>
     </header>

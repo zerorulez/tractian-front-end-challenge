@@ -4,12 +4,13 @@ export default {
   theme: {
     extend: {},
     colors: {
-      primary: "#2188FF",
-      secondary: "#023B78",
+      "blue-500": "#2188FF",
+      "blue-900": "#023B78",
       "dark-blue": "#17192D",
       "light-gray": "#E3EAEF",
-      "gray-950": "#24292F",
+      "gray-200": "#D8DFE6",
       "gray-600": "#77818C",
+      "gray-950": "#24292F",
     },
   },
   plugins: [],
