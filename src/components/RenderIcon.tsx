@@ -1,10 +1,6 @@
 import React from "react";
-import { AssetTreeNode } from "../types";
 import BoltIcon from "./icons/Bolt";
-
-interface TreeNodeProps {
-  node: AssetTreeNode;
-}
+import { TreeNodeProps } from "../types";
 
 const RenderIcon: React.FC<TreeNodeProps> = ({ node }) => {
   if (node.status === "operating" && node.sensorType === "vibration") {
@@ -24,6 +20,7 @@ const RenderIcon: React.FC<TreeNodeProps> = ({ node }) => {
       </div>
     );
   }
+  return null;
 };
 
 export default RenderIcon;

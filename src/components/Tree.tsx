@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import TreeNode from "./TreeNode";
 import useStore from "../hooks/useStore";
-
-interface AssetTreeProps {
-  companyId: string;
-}
+import { Asset, AssetTreeProps, Loc } from "../types";
 
 const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
   const treeData = useStore((state) => state.treeData);
@@ -14,43 +11,51 @@ const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
   const setIsTreeLoading = useStore((state) => state.setIsTreeLoading);
 
   useEffect(() => {
-    setIsTreeLoading(true);
     const loadData = async () => {
-      const locations = await fetchLocations(companyId);
-      const assets = await fetchAssets(companyId);
-      if (locations && assets) {
-        buildTree(locations, assets);
+      setIsTreeLoading(true);
+
+      try {
+        const [locations, assets] = await Promise.all([
+          fetchLocations(companyId),
+          fetchAssets(companyId),
+        ]);
+
+        if (locations && assets) {
+          buildTree(locations, assets);
+        }
+      } catch (error) {
+        console.error("Error loading data:", error);
+      } finally {
         setIsTreeLoading(false);
       }
     };
-    loadData();
-  }, [companyId, filter]);
 
-  const fetchLocations = async (companyId) => {
+    loadData();
+  }, [companyId, filter, buildTree, setIsTreeLoading]);
+
+  const fetchLocations = async (
+    companyId: string
+  ): Promise<Loc[] | undefined> => {
     try {
       const response = await fetch(
         `https://fake-api.tractian.com/companies/${companyId}/locations`
       );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      return data;
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.json();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
     }
   };
 
-  const fetchAssets = async (companyId) => {
+  const fetchAssets = async (
+    companyId: string
+  ): Promise<Asset[] | undefined> => {
     try {
       const response = await fetch(
         `https://fake-api.tractian.com/companies/${companyId}/assets`
       );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      return data;
+      if (!response.ok) throw new Error("Network response was not ok");
+      return response.json();
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
     }

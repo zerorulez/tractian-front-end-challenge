@@ -1,49 +1,39 @@
 import { clsx } from "clsx";
+import { ButtonProps } from "../../types";
 
-function Button({
+const Button: React.FC<ButtonProps> = ({
   className,
   variant,
-  selected,
+  selected = false,
   label,
   Icon,
-  handleClick,
-}: {
-  className?: string;
-  variant: "nav" | "outline";
-  selected?: boolean;
-  label: string;
-  Icon?: () => JSX.Element;
-  handleClick?: () => void;
-}) {
+  handleClick = () => {},
+}) => {
+  const baseClasses = clsx(
+    "flex items-center gap-2 font-semibold", // Common styling for all buttons
+    variant === "nav" &&
+      "bg-blue-900 py-1 px-2 rounded-sm text-xs hover:bg-blue-500", // Styles for 'nav' variant
+    variant === "outline" &&
+      "bg-[#ffffff] text-gray-600 border border-gray-200 rounded-[3px] py-[6px] px-4 text-sm hover:bg-blue-500 hover:text-[#ffffff] group", // Styles for 'outline' variant
+    selected && "!bg-blue-500 !text-[#ffffff]", // Styles when button is selected
+    className
+  );
+
+  const iconClasses = clsx(
+    variant === "outline" && "text-blue-500 group-hover:text-[#ffffff]", // Icon color for 'outline' variant
+    selected && "!text-[#ffffff]" // Icon color when button is selected
+  );
+
   return (
-    <button
-      className={clsx(
-        variant === "nav" &&
-          `bg-blue-900 py-1 px-2 rounded-sm flex items-center gap-2 font-semibold text-xs hover:bg-blue-500`,
-        variant === "outline" &&
-          `font-semibold text-gray-600 text-sm bg-[#ffffff] border border-gray-200 rounded-[3px] flex items-center py-[6px] px-4 gap-[6px] hover:bg-blue-500 hover:text-[#ffffff] group`,
-        selected && "!bg-blue-500 !text-[#ffffff]",
-        className
-      )}
-      onClick={() => {
-        if (handleClick) {
-          handleClick();
-        }
-      }}
-    >
+    <button className={baseClasses} onClick={handleClick}>
       {Icon && (
-        <div
-          className={clsx(
-            variant === "outline" && "text-blue-500 group-hover:text-[#ffffff]",
-            selected && "!text-[#ffffff]"
-          )}
-        >
+        <div className={iconClasses}>
           <Icon />
         </div>
       )}
       {label}
     </button>
   );
-}
+};
 
 export default Button;

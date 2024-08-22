@@ -1,36 +1,46 @@
 import { create } from "zustand";
-import { AssetTreeNode } from "../types";
+import { Asset, AssetTreeNode, Company, StoreState, Loc } from "../types";
 
-const useStore = create((set) => ({
-  selectedCompany: {},
-  setSelectedCompany: (newCompany: object) =>
-    set({ selectedCompany: newCompany }),
-  selectedAsset: {},
-  setSelectedAsset: (newAsset: object) => set({ selectedAsset: newAsset }),
+// Create the Zustand store with the defined state and functions
+const useStore = create<StoreState>((set) => ({
+  // Initial state for the selected company
+  selectedCompany: {} as Company,
+  setSelectedCompany: (newCompany) => set({ selectedCompany: newCompany }),
+
+  // Initial state for the selected asset
+  selectedAsset: {} as Asset,
+  setSelectedAsset: (newAsset) => set({ selectedAsset: newAsset }),
+
+  // Initial state for the filter string
   filter: "",
-  setFilter: (newFilter: "") =>
-    set((state) => {
-      if (state.filter === newFilter) {
-        return { filter: "" };
-      }
-      return { filter: newFilter };
-    }),
+  setFilter: (newFilter) =>
+    set((state) => ({
+      filter: state.filter === newFilter ? "" : newFilter,
+    })),
+
+  // Initial state for the tree data
   treeData: [],
+
+  // Initial state for the tree loading status
   isTreeLoading: false,
-  setIsTreeLoading: (newLoading: object) => set({ isTreeLoading: newLoading }),
+  setIsTreeLoading: (newLoading) => set({ isTreeLoading: newLoading }),
+
+  // Function to build the tree from locations and assets
   buildTree: (locations, assets) =>
     set((state) => {
-      // Mapeia os ativos e locais
-      const assetMap: { [key: string]: AssetTreeNode } = {};
+      // Map assets and locations to an object where the key is the ID
+      const assetMap: Record<string, AssetTreeNode> = {};
 
-      assets.forEach((asset) => {
+      // Add assets to the map
+      assets.forEach((asset: Asset) => {
         assetMap[asset.id] = {
           ...asset,
           children: [],
         };
       });
 
-      locations.forEach((location) => {
+      // Add locations to the map
+      locations.forEach((location: Loc) => {
         assetMap[location.id] = {
           id: location.id,
           name: location.name,
@@ -40,10 +50,10 @@ const useStore = create((set) => ({
         };
       });
 
-      // Monta a árvore
+      // Initialize the tree that will be returned
       const tree: AssetTreeNode[] = [];
 
-      // Adiciona filhos para ativos e locais
+      // Add a node to the tree based on its parentId or locationId
       const addToTree = (node: AssetTreeNode) => {
         if (node.parentId) {
           const parent = assetMap[node.parentId];
@@ -60,22 +70,25 @@ const useStore = create((set) => ({
         }
       };
 
-      assets.forEach((asset) => addToTree(assetMap[asset.id]));
-      locations.forEach((location) => addToTree(assetMap[location.id]));
+      // Add all assets and locations to the tree
+      assets.forEach((asset: Asset) => addToTree(assetMap[asset.id]));
+      locations.forEach((location: Loc) => addToTree(assetMap[location.id]));
 
-      // Filtra a árvore
-      function filterTree(
+      // Recursive function to filter the tree based on the search string
+      const filterTree = (
         node: AssetTreeNode,
         searchString: string
-      ): AssetTreeNode | null {
-        if (
+      ): AssetTreeNode | null => {
+        // Check if the node or any of its children match the filter
+        const matchesFilter =
           JSON.stringify(node)
             .toLowerCase()
             .includes(searchString.toLowerCase()) ||
           node.children.some(
             (child) => filterTree(child, searchString) !== null
-          )
-        ) {
+          );
+
+        if (matchesFilter) {
           return {
             ...node,
             children: node.children
@@ -84,11 +97,12 @@ const useStore = create((set) => ({
           };
         }
         return null;
-      }
+      };
 
+      // Filter the tree based on the filter string in the state
       const filteredTree = tree
         .map((node) => filterTree(node, state.filter))
-        .filter((node) => node !== null) as AssetTreeNode[];
+        .filter((node): node is AssetTreeNode => node !== null);
 
       console.log("treeData", filteredTree);
 

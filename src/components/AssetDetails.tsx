@@ -1,10 +1,13 @@
-import useStore from "../hooks/useStore";
-import InboxIcon from "./icons/Inbox";
-import ReceiverIcon from "./icons/Receiver";
-import SensorIcon from "./icons/Sensor";
-import RenderIcon from "./RenderIcon";
+import useStore from "../hooks/useStore"; // Import custom hook for state management
+import InboxIcon from "./icons/Inbox"; // Import Inbox icon
+import ReceiverIcon from "./icons/Receiver"; // Import Receiver icon
+import SensorIcon from "./icons/Sensor"; // Import Sensor icon
+import RenderIcon from "./RenderIcon"; // Import RenderIcon component
+import { AssetTreeNode } from "../types";
 
+// Define the AssetDetails component
 function AssetDetails() {
+  // Access the selected asset from the store
   const selectedAsset = useStore((state) => state.selectedAsset);
 
   return (
@@ -12,9 +15,10 @@ function AssetDetails() {
       {selectedAsset.name && (
         <div className="py-[14px] px-4 text-lg font-semibold border-b border-gray-200 flex items-center">
           <p>{selectedAsset.name}</p>
-          <RenderIcon node={selectedAsset} />
+          <RenderIcon node={selectedAsset as AssetTreeNode} />
         </div>
       )}
+
       {selectedAsset.gatewayId && selectedAsset.sensorId && (
         <>
           <div className="flex p-6 gap-6">
@@ -34,7 +38,7 @@ function AssetDetails() {
                   <div className="flex bg-blue-500 rounded-full text-[#ffffff] w-6 h-6 justify-center items-center">
                     <p>M</p>
                   </div>
-                  <p className="text-gray-500">Mecânica</p>
+                  <p className="text-gray-500">Mecânica</p>{" "}
                 </div>
               </div>
             </div>
@@ -42,6 +46,7 @@ function AssetDetails() {
           <div className="border-b border-gray-200 mx-6"></div>
         </>
       )}
+
       <div className="grid grid-cols-2 p-6">
         {selectedAsset.sensorId && (
           <div>
@@ -50,7 +55,7 @@ function AssetDetails() {
               <div className="text-blue-500">
                 <SensorIcon />
               </div>
-              <p className="text-gray-500">{selectedAsset.sensorId}</p>
+              <p className="text-gray-500">{selectedAsset.sensorId}</p>{" "}
             </div>
           </div>
         )}
