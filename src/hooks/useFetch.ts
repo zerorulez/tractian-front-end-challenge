@@ -19,7 +19,6 @@ const useFetch = (url: string) => {
       .then((data) => {
         setIsLoading(false);
         setData(data.slice(0).reverse());
-        console.log(data.slice(0).reverse());
         setError(null);
       })
       .catch((err) => {

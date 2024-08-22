@@ -8,12 +8,10 @@ function Header() {
   const selectedCompany = useStore((state) => state.selectedCompany);
   const setSelectedCompany = useStore((state) => state.setSelectedCompany);
 
-  const { data, isLoading, error } = useFetch("/companies");
+  const { data } = useFetch("/companies");
 
   return (
     <header>
-      {isLoading && <div>Loading...</div>}
-      {error && <div>{error}</div>}
       <div className="flex justify-between py-3 px-4 bg-dark-blue text-[#fff]">
         <img src={TractianLogo} alt="Tractian Logo" />
         <nav className="flex gap-2">

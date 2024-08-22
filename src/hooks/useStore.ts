@@ -7,10 +7,6 @@ const useStore = create((set) => ({
     set({ selectedCompany: newCompany }),
   selectedAsset: {},
   setSelectedAsset: (newAsset: object) => set({ selectedAsset: newAsset }),
-  locations: [],
-  setLocations: (newLocations: []) => set({ locations: newLocations }),
-  assets: [],
-  setAssets: (newAssets: []) => set({ assets: newAssets }),
   filter: "",
   setFilter: (newFilter: "") =>
     set((state) => {
@@ -20,18 +16,21 @@ const useStore = create((set) => ({
       return { filter: newFilter };
     }),
   treeData: [],
-  buildTree: () =>
+  isTreeLoading: false,
+  setIsTreeLoading: (newLoading: object) => set({ isTreeLoading: newLoading }),
+  buildTree: (locations, assets) =>
     set((state) => {
+      // Mapeia os ativos e locais
       const assetMap: { [key: string]: AssetTreeNode } = {};
 
-      state.assets.forEach((asset) => {
+      assets.forEach((asset) => {
         assetMap[asset.id] = {
           ...asset,
           children: [],
         };
       });
 
-      state.locations.forEach((location) => {
+      locations.forEach((location) => {
         assetMap[location.id] = {
           id: location.id,
           name: location.name,
@@ -41,35 +40,30 @@ const useStore = create((set) => ({
         };
       });
 
+      // Monta a árvore
       const tree: AssetTreeNode[] = [];
 
-      state.assets.forEach((asset) => {
-        if (asset.parentId) {
-          const parent = assetMap[asset.parentId];
+      // Adiciona filhos para ativos e locais
+      const addToTree = (node: AssetTreeNode) => {
+        if (node.parentId) {
+          const parent = assetMap[node.parentId];
           if (parent) {
-            parent.children.push(assetMap[asset.id]);
+            parent.children.push(node);
           }
-        } else if (asset.locationId) {
-          const location = assetMap[asset.locationId];
+        } else if (node.locationId) {
+          const location = assetMap[node.locationId];
           if (location) {
-            location.children.push(assetMap[asset.id]);
+            location.children.push(node);
           }
         } else {
-          tree.push(assetMap[asset.id]);
+          tree.push(node);
         }
-      });
+      };
 
-      state.locations.forEach((location) => {
-        if (location.parentId) {
-          const parent = assetMap[location.parentId];
-          if (parent) {
-            parent.children.push(assetMap[location.id]);
-          }
-        } else {
-          tree.push(assetMap[location.id]);
-        }
-      });
+      assets.forEach((asset) => addToTree(assetMap[asset.id]));
+      locations.forEach((location) => addToTree(assetMap[location.id]));
 
+      // Filtra a árvore
       function filterTree(
         node: AssetTreeNode,
         searchString: string
@@ -77,16 +71,18 @@ const useStore = create((set) => ({
         if (
           JSON.stringify(node)
             .toLowerCase()
-            .includes(searchString.toLowerCase())
+            .includes(searchString.toLowerCase()) ||
+          node.children.some(
+            (child) => filterTree(child, searchString) !== null
+          )
         ) {
-          // Se o nó contém a string, mantenha-o e filtre seus filhos
-          const filteredChildren = node.children
-            .map((child) => filterTree(child, searchString))
-            .filter((child) => child !== null) as AssetTreeNode[];
-          return { ...node, children: filteredChildren };
+          return {
+            ...node,
+            children: node.children
+              .map((child) => filterTree(child, searchString))
+              .filter((child) => child !== null) as AssetTreeNode[],
+          };
         }
-
-        // Se o nó não contém a string, não o mantenha
         return null;
       }
 
@@ -94,7 +90,7 @@ const useStore = create((set) => ({
         .map((node) => filterTree(node, state.filter))
         .filter((node) => node !== null) as AssetTreeNode[];
 
-      console.log("filteredTree", filteredTree, state.filter);
+      console.log("treeData", filteredTree);
 
       return { treeData: filteredTree };
     }),

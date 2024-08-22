@@ -5,7 +5,7 @@ import ThunderIcon from "./icons/Thunder";
 import Tree from "./Tree";
 import AssetDetails from "./AssetDetails";
 import { useDebouncedCallback } from "use-debounce";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "./icons/Search";
 
 function Main() {
@@ -15,13 +15,24 @@ function Main() {
   const filter = useStore((state) => state.filter);
   const setFilter = useStore((state) => state.setFilter);
 
+  useEffect(() => {
+    debounced(textFilter);
+  }, [textFilter]);
+
+  // reset the input when using filters
+  useEffect(() => {
+    if (filter === "alert" || filter === "energy") {
+      setTextFilter("");
+    }
+  }, [filter]);
+
   const debounced = useDebouncedCallback(
     // function
     (value) => {
       setFilter(value);
     },
     // delay in ms
-    1000
+    500
   );
 
   return (
@@ -61,7 +72,8 @@ function Main() {
                   id="filter"
                   placeholder="Buscar Ativo ou Local"
                   className="h-[45px] w-full p-3"
-                  onChange={(e) => debounced(e.target.value)}
+                  value={textFilter}
+                  onChange={(e) => setTextFilter(e.target.value)}
                 />
                 <div className="flex justify-center items-center min-w-[44px] h-[44px] top-[16px] right-[21px]">
                   <SearchIcon />

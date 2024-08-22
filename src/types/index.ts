@@ -9,6 +9,7 @@ export interface Asset {
   name: string;
   parentId: string | null;
   locationId: string | null;
+  sensorId?: string | null;
   sensorType?: "energy" | "vibration";
   status?: "operating" | "alert";
 }
