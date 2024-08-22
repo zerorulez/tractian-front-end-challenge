@@ -18,7 +18,7 @@ const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
   const setAssets = useStore((state) => state.setAssets);
   const treeData = useStore((state) => state.treeData);
   const buildTree = useStore((state) => state.buildTree);
-  const selectedFilter = useStore((state) => state.selectedFilter);
+  const filter = useStore((state) => state.filter);
 
   useEffect(() => {
     setLocations(locations);
@@ -26,7 +26,7 @@ const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
     if (locations && locations.length && assets && assets.length) {
       buildTree();
     }
-  }, [assets, locations, selectedFilter]);
+  }, [assets, locations, filter]);
 
   return (
     <ul className="text-sm text-dark-blue">

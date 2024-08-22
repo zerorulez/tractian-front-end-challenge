@@ -12,3 +12,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+textarea:focus,
+input:focus {
+  outline: none;
+}

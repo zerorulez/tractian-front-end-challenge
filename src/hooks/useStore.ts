@@ -11,13 +11,13 @@ const useStore = create((set) => ({
   setLocations: (newLocations: []) => set({ locations: newLocations }),
   assets: [],
   setAssets: (newAssets: []) => set({ assets: newAssets }),
-  selectedFilter: "",
-  setSelectedFilter: (newFilter: "") =>
+  filter: "",
+  setFilter: (newFilter: "") =>
     set((state) => {
-      if (state.selectedFilter === newFilter) {
-        return { selectedFilter: "" };
+      if (state.filter === newFilter) {
+        return { filter: "" };
       }
-      return { selectedFilter: newFilter };
+      return { filter: newFilter };
     }),
   treeData: [],
   buildTree: () =>
@@ -74,7 +74,11 @@ const useStore = create((set) => ({
         node: AssetTreeNode,
         searchString: string
       ): AssetTreeNode | null {
-        if (JSON.stringify(node).includes(searchString.toLowerCase())) {
+        if (
+          JSON.stringify(node)
+            .toLowerCase()
+            .includes(searchString.toLowerCase())
+        ) {
           // Se o nó contém a string, mantenha-o e filtre seus filhos
           const filteredChildren = node.children
             .map((child) => filterTree(child, searchString))
@@ -87,8 +91,10 @@ const useStore = create((set) => ({
       }
 
       const filteredTree = tree
-        .map((node) => filterTree(node, state.selectedFilter))
+        .map((node) => filterTree(node, state.filter))
         .filter((node) => node !== null) as AssetTreeNode[];
+
+      console.log("filteredTree", filteredTree, state.filter);
 
       return { treeData: filteredTree };
     }),

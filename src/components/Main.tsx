@@ -4,12 +4,25 @@ import CriticalIcon from "./icons/Critical";
 import ThunderIcon from "./icons/Thunder";
 import Tree from "./Tree";
 import AssetDetails from "./AssetDetails";
-import { useEffect } from "react";
+import { useDebouncedCallback } from "use-debounce";
+import { useState } from "react";
+import SearchIcon from "./icons/Search";
 
 function Main() {
+  const [textFilter, setTextFilter] = useState("");
+
   const selectedCompany = useStore((state) => state.selectedCompany);
-  const selectedFilter = useStore((state) => state.selectedFilter);
-  const setSelectedFilter = useStore((state) => state.setSelectedFilter);
+  const filter = useStore((state) => state.filter);
+  const setFilter = useStore((state) => state.setFilter);
+
+  const debounced = useDebouncedCallback(
+    // function
+    (value) => {
+      setFilter(value);
+    },
+    // delay in ms
+    1000
+  );
 
   return (
     <main className="bg-light-gray h-[calc(100vh-48px)] p-2">
@@ -27,21 +40,36 @@ function Main() {
                 label="Sensor de Energia"
                 Icon={ThunderIcon}
                 variant="outline"
-                handleClick={() => setSelectedFilter("energy")}
-                selected={selectedFilter == "energy"}
+                handleClick={() => setFilter("energy")}
+                selected={filter == "energy"}
               />
               <Button
                 label="Crítico"
                 Icon={CriticalIcon}
                 variant="outline"
-                handleClick={() => setSelectedFilter("alert")}
-                selected={selectedFilter == "alert"}
+                handleClick={() => setFilter("alert")}
+                selected={filter == "alert"}
               />
             </div>
           </div>
           <div className="flex h-[calc(100vh-142.6px)] justify-between mt-3 gap-2">
-            <div className="border border-gray-200 min-w-[479px] rounded-sm px-1 py-2 overflow-y-scroll">
-              <Tree companyId={selectedCompany.id} />
+            <div className="border border-gray-200 min-w-[479px] rounded-sm">
+              <div className="flex border-b border-gray-200 ">
+                <input
+                  type="text"
+                  name="filter"
+                  id="filter"
+                  placeholder="Buscar Ativo ou Local"
+                  className="h-[45px] w-full p-3"
+                  onChange={(e) => debounced(e.target.value)}
+                />
+                <div className="flex justify-center items-center min-w-[44px] h-[44px] top-[16px] right-[21px]">
+                  <SearchIcon />
+                </div>
+              </div>
+              <div className="px-1 py-2 h-[calc(100vh-188.6px)] overflow-y-scroll">
+                <Tree companyId={selectedCompany.id} />
+              </div>
             </div>
             <div className="border border-gray-200 grow rounded-sm">
               <AssetDetails />
