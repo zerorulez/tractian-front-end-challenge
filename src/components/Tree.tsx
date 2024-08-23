@@ -1,20 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import TreeNode from "./TreeNode";
 import useStore from "@/hooks/useStore";
-import { Asset, AssetTreeProps, Loc } from "@/types";
+import { Asset, AssetTreeNode, AssetTreeProps, Loc } from "@/types";
 import Spinner from "./ui/Spinner";
 
 const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
+  const [data, setData] = useState<AssetTreeNode[]>([]);
+
+  const [isPending, startTransition] = useTransition();
+
   const treeData = useStore((state) => state.treeData);
   const buildTree = useStore((state) => state.buildTree);
   const filter = useStore((state) => state.filter);
-  const isTreeLoading = useStore((state) => state.isTreeLoading);
-  const setIsTreeLoading = useStore((state) => state.setIsTreeLoading);
 
   useEffect(() => {
     const loadData = async () => {
-      setIsTreeLoading(true);
-
       try {
         const [locations, assets] = await Promise.all([
           fetchLocations(companyId),
@@ -26,13 +26,15 @@ const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
         }
       } catch (error) {
         console.error("Error loading data:", error);
-      } finally {
-        setIsTreeLoading(false);
       }
     };
 
     loadData();
-  }, [companyId, filter, buildTree, setIsTreeLoading]);
+  }, [companyId, filter, buildTree]);
+
+  useEffect(() => {
+    startTransition(() => setData(treeData));
+  }, [treeData]);
 
   const fetchLocations = async (
     companyId: string
@@ -64,14 +66,14 @@ const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
 
   return (
     <>
-      {isTreeLoading && (
-        <div className="flex justify-center items-center">
+      {isPending && (
+        <div className="flex justify-center items-center h-full">
           <Spinner />
         </div>
       )}
-      {!isTreeLoading && treeData && (
+      {!isPending && (
         <ul className="text-sm text-dark-blue">
-          {treeData.map((node) => (
+          {data.map((node) => (
             <TreeNode key={node.id} node={node} />
           ))}
         </ul>

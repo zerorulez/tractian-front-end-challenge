@@ -21,10 +21,6 @@ const useStore = create<StoreState>((set) => ({
   // Initial state for the tree data
   treeData: [],
 
-  // Initial state for the tree loading status
-  isTreeLoading: false,
-  setIsTreeLoading: (newLoading) => set({ isTreeLoading: newLoading }),
-
   // Function to build the tree from locations and assets
   buildTree: (locations, assets) =>
     set((state) => {
@@ -100,11 +96,15 @@ const useStore = create<StoreState>((set) => ({
       };
 
       // Filter the tree based on the filter string in the state
-      const filteredTree = tree
-        .map((node) => filterTree(node, state.filter))
-        .filter((node): node is AssetTreeNode => node !== null);
+      if (state.filter !== "") {
+        const filteredTree = tree
+          .map((node) => filterTree(node, state.filter))
+          .filter((node): node is AssetTreeNode => node !== null);
 
-      return { treeData: filteredTree };
+        return { treeData: filteredTree };
+      }
+
+      return { treeData: tree };
     }),
 }));
 

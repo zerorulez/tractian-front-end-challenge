@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { AssetTreeNode, TreeNodeProps } from "@/types";
 import LocationIcon from "./icons/Location";
 import AssetIcon from "./icons/Asset";
@@ -44,15 +44,15 @@ const TreeNode: React.FC<TreeNodeProps> = ({ node }) => {
         <span className="pl-1">{node.name}</span>
         <RenderIcon node={node} />
       </div>
-      {/* {hasChildren && (
+      {hasChildren && (
         <ul className="ml-4 relative before:content-[''] before:border-l before:border-gray-200 before:absolute before:top-0 before:left-[-4px] before:h-full">
           {node.children.map((child) => (
             <TreeNode key={child.id} node={child} />
           ))}
         </ul>
-      )} */}
+      )}
     </li>
   );
 };
 
-export default TreeNode;
+export default memo(TreeNode);

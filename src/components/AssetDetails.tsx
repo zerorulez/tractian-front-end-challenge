@@ -1,13 +1,11 @@
-import useStore from "@/hooks/useStore"; // Import custom hook for state management
-import InboxIcon from "./icons/Inbox"; // Import Inbox icon
-import ReceiverIcon from "./icons/Receiver"; // Import Receiver icon
-import SensorIcon from "./icons/Sensor"; // Import Sensor icon
-import RenderIcon from "./RenderIcon"; // Import RenderIcon component
+import useStore from "@/hooks/useStore";
+import InboxIcon from "./icons/Inbox";
+import ReceiverIcon from "./icons/Receiver";
+import SensorIcon from "./icons/Sensor";
+import RenderIcon from "./RenderIcon";
 import { AssetTreeNode } from "@/types";
 
-// Define the AssetDetails component
 function AssetDetails() {
-  // Access the selected asset from the store
   const selectedAsset = useStore((state) => state.selectedAsset);
 
   return (

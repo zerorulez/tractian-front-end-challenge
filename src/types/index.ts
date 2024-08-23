@@ -31,8 +31,6 @@ export interface StoreState {
   filter: string;
   setFilter: (newFilter: string) => void;
   treeData: AssetTreeNode[];
-  isTreeLoading: boolean;
-  setIsTreeLoading: (newLoading: boolean) => void;
   buildTree: (locations: Loc[], assets: Asset[]) => void;
 }
 
