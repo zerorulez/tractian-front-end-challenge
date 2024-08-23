@@ -104,8 +104,6 @@ const useStore = create<StoreState>((set) => ({
         .map((node) => filterTree(node, state.filter))
         .filter((node): node is AssetTreeNode => node !== null);
 
-      console.log("treeData", filteredTree);
-
       return { treeData: filteredTree };
     }),
 }));
