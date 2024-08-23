@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import TreeNode from "./TreeNode";
-import useStore from "../hooks/useStore";
-import { Asset, AssetTreeProps, Loc } from "../types";
+import useStore from "@/hooks/useStore";
+import { Asset, AssetTreeProps, Loc } from "@/types";
 
 const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
   const treeData = useStore((state) => state.treeData);

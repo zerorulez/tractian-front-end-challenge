@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import useStore from "../hooks/useStore";
+import useStore from "@/hooks/useStore";
 import Tree from "./Tree";
 import AssetDetails from "./AssetDetails";
 import FilterButtons from "./FilterButtons";

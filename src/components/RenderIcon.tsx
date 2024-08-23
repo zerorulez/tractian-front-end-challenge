@@ -1,6 +1,6 @@
 import React from "react";
 import BoltIcon from "./icons/Bolt";
-import { TreeNodeProps } from "../types";
+import { TreeNodeProps } from "@/types";
 
 const RenderIcon: React.FC<TreeNodeProps> = ({ node }) => {
   if (node.status === "operating" && node.sensorType === "vibration") {

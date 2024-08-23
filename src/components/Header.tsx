@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import TractianLogo from "../assets/tractian.svg";
-import useStore from "../hooks/useStore";
+import TractianLogo from "@/assets/tractian.svg";
+import useStore from "@/hooks/useStore";
 import Button from "./ui/Button";
 import GoldIcon from "./icons/Gold";
-import { Company } from "../types";
+import { Company } from "@/types";
 
 function Header() {
   const [companies, setCompanies] = useState<Company[]>([]);

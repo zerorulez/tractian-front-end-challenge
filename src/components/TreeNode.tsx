@@ -1,11 +1,11 @@
 import React from "react";
-import { AssetTreeNode, TreeNodeProps } from "../types";
+import { AssetTreeNode, TreeNodeProps } from "@/types";
 import LocationIcon from "./icons/Location";
 import AssetIcon from "./icons/Asset";
 import ComponentIcon from "./icons/Component";
 import ChevronIcon from "./icons/Chevron";
 import clsx from "clsx";
-import useStore from "../hooks/useStore";
+import useStore from "@/hooks/useStore";
 import RenderIcon from "./RenderIcon";
 
 const TreeNode: React.FC<TreeNodeProps> = ({ node }) => {

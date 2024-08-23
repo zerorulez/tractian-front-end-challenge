@@ -1,9 +1,9 @@
-import useStore from "../hooks/useStore"; // Import custom hook for state management
+import useStore from "@/hooks/useStore"; // Import custom hook for state management
 import InboxIcon from "./icons/Inbox"; // Import Inbox icon
 import ReceiverIcon from "./icons/Receiver"; // Import Receiver icon
 import SensorIcon from "./icons/Sensor"; // Import Sensor icon
 import RenderIcon from "./RenderIcon"; // Import RenderIcon component
-import { AssetTreeNode } from "../types";
+import { AssetTreeNode } from "@/types";
 
 // Define the AssetDetails component
 function AssetDetails() {

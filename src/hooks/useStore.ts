@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Asset, AssetTreeNode, Company, StoreState, Loc } from "../types";
+import { Asset, AssetTreeNode, Company, StoreState, Loc } from "@/types";
 
 // Create the Zustand store with the defined state and functions
 const useStore = create<StoreState>((set) => ({
