@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import TreeNode from "./TreeNode";
 import useStore from "@/hooks/useStore";
 import { Asset, AssetTreeProps, Loc } from "@/types";
+import Spinner from "./ui/Spinner";
 
 const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
   const treeData = useStore((state) => state.treeData);
@@ -63,7 +64,11 @@ const Tree: React.FC<AssetTreeProps> = ({ companyId }) => {
 
   return (
     <>
-      {isTreeLoading && <div className="pl-4">Carregando...</div>}
+      {isTreeLoading && (
+        <div className="flex justify-center items-center">
+          <Spinner />
+        </div>
+      )}
       {!isTreeLoading && treeData && (
         <ul className="text-sm text-dark-blue">
           {treeData.map((node) => (
