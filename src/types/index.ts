@@ -30,8 +30,12 @@ export interface StoreState {
   setSelectedAsset: (newAsset: Asset) => void;
   filter: string;
   setFilter: (newFilter: string) => void;
+  locations: Loc[];
+  setLocations: (newLocations: Loc[]) => void;
+  assets: Asset[];
+  setAssets: (newAssets: Asset[]) => void;
   treeData: AssetTreeNode[];
-  buildTree: (locations: Loc[], assets: Asset[]) => void;
+  buildTree: () => void;
 }
 
 export interface ButtonProps {

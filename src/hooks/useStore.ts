@@ -18,17 +18,23 @@ const useStore = create<StoreState>((set) => ({
       filter: state.filter === newFilter ? "" : newFilter,
     })),
 
+  locations: [] as Loc[],
+  setLocations: (newLocations) => set({ locations: newLocations }),
+
+  assets: [] as Asset[],
+  setAssets: (newAssets) => set({ assets: newAssets }),
+
   // Initial state for the tree data
   treeData: [],
 
   // Function to build the tree from locations and assets
-  buildTree: (locations, assets) =>
+  buildTree: () =>
     set((state) => {
       // Map assets and locations to an object where the key is the ID
       const assetMap: Record<string, AssetTreeNode> = {};
 
       // Add assets to the map
-      assets.forEach((asset: Asset) => {
+      state.assets.forEach((asset: Asset) => {
         assetMap[asset.id] = {
           ...asset,
           children: [],
@@ -36,7 +42,7 @@ const useStore = create<StoreState>((set) => ({
       });
 
       // Add locations to the map
-      locations.forEach((location: Loc) => {
+      state.locations.forEach((location: Loc) => {
         assetMap[location.id] = {
           id: location.id,
           name: location.name,
@@ -67,8 +73,10 @@ const useStore = create<StoreState>((set) => ({
       };
 
       // Add all assets and locations to the tree
-      assets.forEach((asset: Asset) => addToTree(assetMap[asset.id]));
-      locations.forEach((location: Loc) => addToTree(assetMap[location.id]));
+      state.assets.forEach((asset: Asset) => addToTree(assetMap[asset.id]));
+      state.locations.forEach((location: Loc) =>
+        addToTree(assetMap[location.id])
+      );
 
       // Recursive function to filter the tree based on the search string
       const filterTree = (
