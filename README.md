@@ -4,7 +4,6 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
@@ -90,12 +89,6 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Top contributors:
-
-<a href="https://github.com/zerorulez/tractian-front-end-challenge/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=zerorulez/tractian-front-end-challenge" alt="contrib.rocks image" />
-</a>
-
 <!-- CONTACT -->
 
 ## Contact
@@ -120,7 +113,7 @@ Project Link: [https://github.com/zerorulez/tractian-front-end-challenge](https:
 [license-shield]: https://img.shields.io/github/license/zerorulez/tractian-front-end-challenge.svg?style=for-the-badge
 [license-url]: https://github.com/zerorulez/tractian-front-end-challenge/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/lucasmribe/
 [product-screenshot]: images/screenshot.png
 [TypeScript]: https://img.shields.io/badge/TypeScript-20232A?style=for-the-badge&logo=typescript&logoColor=2F74C0
 [TypeScript-url]: https://www.typescriptlang.org/
