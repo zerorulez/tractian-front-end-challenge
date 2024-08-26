@@ -24,6 +24,11 @@
     <a href="https://github.com/zerorulez/tractian-front-end-challenge/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
+<br />
+
+
+https://github.com/user-attachments/assets/30f8d218-6add-4d3b-a9ae-12c8a31681ab
+
 
 <br />
 <div>
@@ -57,14 +62,6 @@
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
-
-<!-- ABOUT THE PROJECT -->
-
-## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 
