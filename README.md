@@ -25,7 +25,20 @@
   </p>
 </div>
 
+<br />
+<div>
+  <h4 align="center">Describe which points of the project you would improve if you had more time:</h4>
+  <ul>
+    <li><strong>Virtualization:</strong> For large lists or tables, use libraries like react-window or react-virtualized to only render visible items, reducing the number of DOM nodes and improving performance.</li>
+    <li><strong>Efficient Data Fetching:</strong> Use caching strategies and tools like React Query or SWR to handle data fetching and caching more efficiently, reducing the number of network requests and improving overall performance.</li>
+      <li><strong>Mobile-First Design:</strong> Ensure that the design starts with mobile devices in mind and progressively enhances for larger screens. This approach can improve the overall responsiveness of the application.</li>
+    <li><strong>Visual Consistency:</strong> I would refine visual consistency by creating and maintaining a well-defined design system. This involves developing a library of reusable components with consistent styles and behaviors.</li>
+    <li><strong>Test Coverage:</strong> I would add unit test coverage using Jest and React Testing Library, ensuring that all critical components and functions are tested to prevent regressions and ensure the application behaves as expected.</li>
+  </ul>
+</div>
+
 <!-- TABLE OF CONTENTS -->
+<br />
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -38,16 +51,10 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
