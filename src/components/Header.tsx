@@ -39,23 +39,21 @@ function Header() {
   };
 
   return (
-    <header>
-      <div className="flex justify-between py-3 px-4 bg-dark-blue text-[#fff]">
-        <img src={TractianLogo} alt="Tractian Logo" />
-        <nav className="flex gap-2">
-          {companies.map((company) => (
-            <Button
-              label={`${company.name} Unit`}
-              handleClick={() => setSelectedCompany(company)}
-              key={company.id}
-              selected={selectedCompany.id === company.id}
-              variant="nav"
-              Icon={GoldIcon}
-            />
-          ))}
-        </nav>
-      </div>
-    </header>
+    <div className="flex justify-between py-3 px-4 bg-dark-blue text-[#fff]">
+      <img src={TractianLogo} alt="Tractian Logo" />
+      <nav className="flex gap-2">
+        {companies.map((company) => (
+          <Button
+            label={`${company.name} Unit`}
+            handleClick={() => setSelectedCompany(company)}
+            key={company.id}
+            selected={selectedCompany.id === company.id}
+            variant="nav"
+            Icon={GoldIcon}
+          />
+        ))}
+      </nav>
+    </div>
   );
 }
 

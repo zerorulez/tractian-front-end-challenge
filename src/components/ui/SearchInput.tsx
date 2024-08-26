@@ -18,7 +18,7 @@ function Main({
         value={textFilter}
         onChange={(e) => setTextFilter(e.target.value)}
       />
-      <div className="flex justify-center items-center min-w-[44px] h-[44px]">
+      <div className="flex justify-center items-center min-w-[45px] h-[45px]">
         <SearchIcon />
       </div>
     </div>

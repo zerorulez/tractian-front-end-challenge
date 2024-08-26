@@ -35,7 +35,7 @@ function Main() {
 
   return (
     <main className="bg-light-gray h-[calc(100vh-48px)] p-2">
-      <div className="bg-[#ffffff] rounded-[4px] p-4 border border-[#D8DFE6] h-[calc(100vh-64px)]">
+      <div className="bg-[#ffffff] rounded-[4px] p-4 border border-[#D8DFE6]">
         <header className="flex items-start justify-between">
           <div className="flex items-center gap-2">
             <h2 className="font-semibold text-xl text-gray-950">Ativos</h2>
@@ -45,8 +45,8 @@ function Main() {
           </div>
           <FilterButtons filter={filter} setFilter={setFilter} />
         </header>
-        <div className="flex h-[calc(100vh-142.6px)] justify-between mt-3 gap-2">
-          <div className="border border-gray-200 min-w-[479px] rounded-sm">
+        <div className="grid grid-cols-1 justify-between mt-3 gap-2 sm:grid-cols-3">
+          <div className="border border-gray-200 rounded-sm">
             <SearchInput
               textFilter={textFilter}
               setTextFilter={setTextFilter}
@@ -55,7 +55,7 @@ function Main() {
               <Tree companyId={selectedCompany.id.toString()} />
             </div>
           </div>
-          <div className="border border-gray-200 grow rounded-sm">
+          <div className="border border-gray-200 rounded-sm sm:col-span-2">
             <AssetDetails />
           </div>
         </div>
